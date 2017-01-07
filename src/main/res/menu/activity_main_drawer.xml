@@ -7,9 +7,13 @@
             android:icon="@drawable/cruz_roja"
             android:title="Actividades" />
         <item
+            android:id="@+id/opciones"
+            android:icon="@drawable/opciones"
+            android:title="Opciones" />
+        <item
             android:id="@+id/desarrollo"
-            android:icon="@drawable/cruz_roja"
-            android:title="desarrollo" />
+            android:icon="@drawable/developer"
+            android:title="Desarrollo" />
     </group>
 
 </menu>
