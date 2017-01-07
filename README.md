@@ -1,2 +1,2 @@
 # AOVAndroid
-Test for the Android App
+App de Android para el manejor de organizaciones de ayuda.
