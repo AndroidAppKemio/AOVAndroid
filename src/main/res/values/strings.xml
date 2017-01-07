@@ -2,4 +2,9 @@
     <string name="app_name">AOV</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Closed</string>
+    <string name="title_activity_desarrollo">Desarrollo</string>
+    <string name="actividades">Actividades</string>
+    <string name="opciones">Opciones</string>
+    <string name="desarrollo">Desarrollo</string>
+    <string name="simular_actividad">Simular actividad</string>
 </resources>

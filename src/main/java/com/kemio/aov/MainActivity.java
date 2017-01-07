@@ -1,5 +1,6 @@
 package com.kemio.aov;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -39,14 +40,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         lstActividades.setAdapter(adapter);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
+        navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.setItemIconTintList(null);
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // TODO: Handle item selection.
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case (R.id.desarrollo):
+                Intent activityDesarrollo = new Intent(getApplicationContext(), Desarrollo.class);
+                startActivity(activityDesarrollo);
+                break;
+            case (R.id.opciones):
+                // TODO: Iniciar la actividad "opciones".
+                break;
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;

@@ -5,15 +5,15 @@
         <item
             android:id="@+id/actividades"
             android:icon="@drawable/cruz_roja"
-            android:title="Actividades" />
+            android:title="@string/actividades" />
         <item
             android:id="@+id/opciones"
             android:icon="@drawable/opciones"
-            android:title="Opciones" />
+            android:title="@string/opciones" />
         <item
             android:id="@+id/desarrollo"
             android:icon="@drawable/developer"
-            android:title="Desarrollo" />
+            android:title="@string/desarrollo" />
     </group>
 
 </menu>
