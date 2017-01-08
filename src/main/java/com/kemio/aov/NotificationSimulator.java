@@ -43,7 +43,7 @@ public class NotificationSimulator extends AppCompatActivity {
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
         int iconId;
-        switch (selectedTypeIndex){
+        switch (selectedTypeIndex) {
             case 0:
                 iconId = R.drawable.icono_actividad;
                 break;
