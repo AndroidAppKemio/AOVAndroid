@@ -30,28 +30,36 @@ public class NotificationSimulator extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItemActividad.ActivityType selectedType = ItemActividad.ActivityType.ACTIVIDAD;
                 int selectedTypeIndex = dropdown.getSelectedItemPosition();
-                if (selectedTypeIndex == 1)
-                    selectedType = ItemActividad.ActivityType.COBERTURA;
-                else if (selectedTypeIndex == 2)
-                    selectedType = ItemActividad.ActivityType.CAPACITACION;
-                else if (selectedTypeIndex == 3)
-                    selectedType = ItemActividad.ActivityType.DIFUSION;
-                makeNotification(edtTitle.getText().toString(), edtContent.getText().toString(), selectedType);
+                makeNotification(edtTitle.getText().toString(), edtContent.getText().toString(), selectedTypeIndex);
             }
         });
 
         System.out.println(dropdown.getSelectedItem());
     }
 
-    private void makeNotification(String title, String content, ItemActividad.ActivityType selectedType) {
-        // TODO: Switch selectedType to check which icon to use. For I don't actually have the icons, I am not doing it now.
-        int iconId = R.drawable.cruz_roja;
-
+    private void makeNotification(String title, String content, int selectedTypeIndex) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
+        int iconId;
+        switch (selectedTypeIndex){
+            case 0:
+                iconId = R.drawable.icono_actividad;
+                break;
+            case 1:
+                iconId = R.drawable.icono_cobertura;
+                break;
+            case 2:
+                iconId = R.drawable.icono_capacitacion;
+                break;
+            case 3:
+                iconId = R.drawable.icono_difusion;
+                break;
+            default:
+                iconId = R.drawable.icono_actividad;
+                break;
+        }
 
         Notification n = new Notification.Builder(this)
                 .setContentTitle(title)

@@ -5,7 +5,7 @@ class ItemActividad {
     private String descripcion;
     private String fecha;
 
-    ItemActividad(String titulo, String descripcion, String fecha, ActivityType type) {
+    public ItemActividad(String titulo, String descripcion, String fecha, ActivityType type) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fecha = fecha;
