@@ -60,7 +60,7 @@ public class NotificationSimulator extends AppCompatActivity {
                 iconId = R.drawable.icono_actividad;
                 break;
         }
-
+        //comentario para que me deje pushear
         Notification n = new Notification.Builder(this)
                 .setContentTitle(title)
                 .setContentText(content)
