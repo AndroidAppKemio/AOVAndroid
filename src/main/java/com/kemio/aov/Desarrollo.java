@@ -41,6 +41,14 @@ public class Desarrollo extends AppCompatActivity
                 startActivity(notificationSimulatorActivity);
             }
         });
+        Button btnFCMSimulator = (Button) findViewById(R.id.btnFCMSimulator);
+        btnFCMSimulator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent FCMSimulatorActivity = new Intent(getApplicationContext(), FCMActivity.class);
+                startActivity(FCMSimulatorActivity);
+            }
+        });
     }
 
     @Override

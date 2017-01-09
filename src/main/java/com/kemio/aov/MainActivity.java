@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.ArrayList;
 
 import static com.kemio.aov.ItemActividad.ActivityType.ACTIVIDAD;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("testTopic");
 
         ArrayList<ItemActividad> actividades = new ArrayList<>();
         // TODO: Llenar lista con actividades sacadas de la API. Usando actividades de prueba.

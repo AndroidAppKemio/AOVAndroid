@@ -26,9 +26,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NotificationSimulator" />
 
-        <service
-            android:name=".ActivityReceivedService"
-            android:exported="false" />
+        <service android:name=".ActivityReceivedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".FCMActivity"></activity>
     </application>
 
 </manifest>

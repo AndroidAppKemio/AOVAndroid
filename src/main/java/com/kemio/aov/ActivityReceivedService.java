@@ -1,90 +1,70 @@
 package com.kemio.aov;
 
-import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.IBinder;
+import android.util.Log;
 
-import org.apache.commons.io.IOUtils;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 
-public class ActivityReceivedService extends Service {
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+public class ActivityReceivedService extends FirebaseMessagingService {
+    final String TAG = "AOV";
+    final static String GROUP_KEY_ACTIVITIES = "group_key_activities";
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        new ActivitiesController().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        // TODO: Handle the messages.
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        stopSelf();
-
-        return START_NOT_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarm.set(
-                AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + (3 * 1000 * 60),
-                PendingIntent.getService(this, 0, new Intent(this, ActivityReceivedService.class), 0)
-        );
-    }
-}
-
-class ActivitiesController extends AsyncTask<Void, Void, ArrayList<ItemActividad>> {
-
-    private String getJSON(String url) throws IOException {
-        HttpURLConnection c;
-        URL u = new URL(url);
-        c = (HttpURLConnection) u.openConnection();
-        c.setRequestMethod("GET");
-        c.setRequestProperty("Content-length", "0");
-        c.setUseCaches(false);
-        c.setAllowUserInteraction(false);
-        c.connect();
-        int status = c.getResponseCode();
-
-        switch (status) {
-            case 200:
-            case 201:
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(c.getInputStream(), writer, "UTF-8");
-                try {
-                    c.disconnect();
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-                }
-                return writer.toString();
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
-        try {
-            c.disconnect();
-        } catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+
+        Map<String, String> data = remoteMessage.getData();
+
+        makeNotification(Integer.parseInt(data.get("id")), data.get("title"), data.get("content"), Integer.parseInt(data.get("activityType")));
+    }
+
+    private void makeNotification(int id, String title, String content, int selectedTypeIndex) {
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        int iconId;
+        switch (selectedTypeIndex) {
+            case 0:
+                iconId = R.drawable.icono_actividad;
+                break;
+            case 1:
+                iconId = R.drawable.icono_cobertura;
+                break;
+            case 2:
+                iconId = R.drawable.icono_capacitacion;
+                break;
+            case 3:
+                iconId = R.drawable.icono_difusion;
+                break;
+            default:
+                iconId = R.drawable.icono_actividad;
+                break;
         }
-        return null;
-    }
 
-    @Override
-    protected ArrayList<ItemActividad> doInBackground(Void... params) {
+        Notification n = new Notification.Builder(this)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(iconId)
+                .setAutoCancel(true)
+                .setGroup(GROUP_KEY_ACTIVITIES)
+                .setContentIntent(pIntent).build();
 
-        return new ArrayList<>();
-    }
 
-    @Override
-    protected void onPostExecute(ArrayList<ItemActividad> result) {
-        super.onPostExecute(result);
-        // TODO: Iterate trough the ArrayList, add the new activities to the local database and send notifications.
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        notificationManager.notify(id, n);
     }
 }

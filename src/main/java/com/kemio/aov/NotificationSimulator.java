@@ -20,7 +20,7 @@ public class NotificationSimulator extends AppCompatActivity {
         setContentView(R.layout.activity_notification_simulator);
 
         final EditText edtTitle = (EditText) findViewById(R.id.edtTitulo);
-        final EditText edtContent = (EditText) findViewById(R.id.edtContent);
+        final EditText edtContent = (EditText) findViewById(R.id.edtContenido);
         final Spinner dropdown = (Spinner) findViewById(R.id.spnActivityType);
         Button btnSend = (Button) findViewById(R.id.btnSend);
 
